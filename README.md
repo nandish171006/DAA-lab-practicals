@@ -1,3 +1,6 @@
-# my-first-project-
-This repository contains the source code and files for ioi
-fefef
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
