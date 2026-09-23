@@ -1,100 +1,44 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": [],
-      "authorship_tag": "ABX9TyMnNclZ/VJgRGQEG0Qz0+wG",
-      "include_colab_link": true
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "cells": [
-    {
-      "cell_type": "markdown",
-      "metadata": {
-        "id": "view-in-github",
-        "colab_type": "text"
-      },
-      "source": [
-        "<a href=\"https://colab.research.google.com/github/nandish171006/DAA-lab-practicals/blob/main/Untitled3.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 1,
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "GtbtSqFqEXQz",
-        "outputId": "6495976f-52a9-46bd-812b-5b2245a9b779"
-      },
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Solution:\n",
-            "A = Red\n",
-            "B = Green\n",
-            "C = Blue\n",
-            "D = Red\n"
-          ]
-        }
-      ],
-      "source": [
-        "map_data = {\n",
-        "    'A': ['B', 'C'],\n",
-        "    'B': ['A', 'C', 'D'],\n",
-        "    'C': ['A', 'B', 'D'],\n",
-        "    'D': ['B', 'C']\n",
-        "}\n",
-        "\n",
-        "colors = ['Red', 'Green', 'Blue']\n",
-        "def is_consistent(region, color, assignment):\n",
-        "    for neighbor in map_data[region]:\n",
-        "        if neighbor in assignment and assignment[neighbor] == color:\n",
-        "            return False\n",
-        "\n",
-        "    return True\n",
-        "def solve_map(assignment):\n",
-        "    # If every region has a color, we are done\n",
-        "    if len(assignment) == len(map_data):\n",
-        "        return assignment\n",
-        "\n",
-        "    # Choose the next uncolored region\n",
-        "    for region in map_data:\n",
-        "        if region not in assignment:\n",
-        "            break\n",
-        "\n",
-        "    # Try each color\n",
-        "    for color in colors:\n",
-        "        if is_consistent(region, color, assignment):\n",
-        "            assignment[region] = color\n",
-        "\n",
-        "            result = solve_map(assignment)\n",
-        "\n",
-        "            if result is not None:\n",
-        "                return result\n",
-        "\n",
-        "            # Backtrack\n",
-        "            del assignment[region]\n",
-        "\n",
-        "    return None\n",
-        "solution = solve_map({})\n",
-        "\n",
-        "print(\"Solution:\")\n",
-        "\n",
-        "for region, color in solution.items():\n",
-        "    print(region, \"=\", color)"
-      ]
-    }
-  ]
+map_data = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
 }
+
+colors = ['Red', 'Green', 'Blue']
+def is_consistent(region, color, assignment):
+    for neighbor in map_data[region]:
+        if neighbor in assignment and assignment[neighbor] == color:
+            return False
+
+    return True
+def solve_map(assignment):
+    # If every region has a color, we are done
+    if len(assignment) == len(map_data):
+        return assignment
+
+    # Choose the next uncolored region
+    for region in map_data:
+        if region not in assignment:
+            break
+
+    # Try each color
+    for color in colors:
+        if is_consistent(region, color, assignment):
+            assignment[region] = color
+
+            result = solve_map(assignment)
+
+            if result is not None:
+                return result
+
+            # Backtrack
+            del assignment[region]
+
+    return None
+solution = solve_map({})
+
+print("Solution:")
+
+for region, color in solution.items():
+    print(region, "=", color)
